@@ -1,0 +1,13 @@
+.card{
+    display: inline-block;
+    vertical-align: top;
+    background-color: #FFF;
+    padding:20px;
+    min-width: 20%;
+}
+
+.card h3{
+    color:#21a560;
+    font-size: 25px;
+    font-weight: normal;
+}

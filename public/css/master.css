@@ -1,3 +1,15 @@
+@import url("snippets/body-content.css");
+
+@font-face {
+    font-family: Regencie Light;
+    src: url('/fonts/RegencieLight.ttf');
+}
+
 body{
     background-color: #F1F1F1;
+    font-family: Regencie Light;
+}
+
+#wrapper{
+    padding:10px;
 }
