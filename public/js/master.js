@@ -15,7 +15,15 @@ function getServers()
         type: 'GET',
         success: function(data) {
             console.log("Data received..");
-            constructElements(data);
+            alarm = constructElements(data);
+            var audio = new Audio('/audio/beep.mp3');
+            if(alarm) {
+                setInterval(function(){
+                    audio.play();
+                },1000);
+            } else {
+                audio.pause();
+            }
         },
         error: function(data) {
             console.log(data);
@@ -25,7 +33,9 @@ function getServers()
 
 function constructElements(data)
 {
-    alarmPercentage = 80;
+    warningPercentage = 70;
+    alarmPercentage = 90;
+    soundAlarm = false;
 
     mainContainer = $('#server-wrapper');
     mainContainer.html("");
@@ -46,7 +56,10 @@ function constructElements(data)
             used = Math.round( ( parseFloat(disk['disk_used_space']) / parseFloat(disk['disk_total_space']) ) * 100 );
 
             if(used >= alarmPercentage) {
-                color = 'danger'
+                color = 'danger';
+                soundAlarm = true;
+            } else if(used >= warningPercentage && used < alarmPercentage) {
+                color = 'warning';
             } else {
                 color = 'success';
             }
@@ -59,4 +72,6 @@ function constructElements(data)
             );
         }
     }
+
+    return soundAlarm;
 }
