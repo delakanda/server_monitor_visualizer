@@ -42,8 +42,8 @@ function constructElements(data)
 
     for(d in data) {
 
-        var serverName = data[d]['server_name'].replace(" ","_")
-        
+        var serverName = data[d]['server_name'].split(' ').join('_');
+
         mainContainer.append(
             "<div class = 'card' id = '"+serverName+"'>"
             +"<h3><i class='fa fa-server' aria-hidden='true'></i> &nbsp;&nbsp; "+serverName+"</h3><br/>"
