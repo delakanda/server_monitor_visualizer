@@ -39,15 +39,19 @@ function constructElements(data)
 
     mainContainer = $('#server-wrapper');
     mainContainer.html("");
+
     for(d in data) {
+
+        var serverName = data[d]['server_name'].replace(" ","_")
+        
         mainContainer.append(
-            "<div class = 'card' id = '"+data[d]['server_name']+"'>"
-            +"<h3><i class='fa fa-server' aria-hidden='true'></i> &nbsp;&nbsp; "+data[d]['server_name']+"</h3><br/>"
+            "<div class = 'card' id = '"+serverName+"'>"
+            +"<h3><i class='fa fa-server' aria-hidden='true'></i> &nbsp;&nbsp; "+serverName+"</h3><br/>"
             +"<div class = 'disks-section'></div>"
             +"</div> &nbsp;&nbsp;&nbsp;"
         );
 
-        diskInsertPoint = $('#'+data[d]['server_name']+" .disks-section");
+        diskInsertPoint = $('#'+serverName+" .disks-section");
 
         for(index in data[d]['disks']) {
 
