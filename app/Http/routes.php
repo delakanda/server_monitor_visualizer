@@ -16,3 +16,4 @@ $app->get('/','MainController@index');
 
 //API ROUTES
 $app->get('/api/v1/servers','ApiController@getServers');
+$app->get('/api/v1/ping_servers','ApiController@pingServers');
