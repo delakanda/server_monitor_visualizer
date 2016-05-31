@@ -38,7 +38,7 @@ function constructElements(data)
     diskSoundAlarm = false;
 
     memoryWarningPercentage = 80;
-    memoryAlarmPercentage = 95;
+    memoryAlarmPercentage = 97;
     memorySoundAlarm = false;
 
     mainContainer = $('#server-wrapper');
