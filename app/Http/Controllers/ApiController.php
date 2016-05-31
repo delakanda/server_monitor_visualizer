@@ -16,6 +16,7 @@ class ApiController extends Controller
             $dataArray[$key]['server_ip'] = $server->server_host_ip;
             $dataArray[$key]['server_name'] = $server->server_name;
             $dataArray[$key]['disks'] = DB::table('disks')->where('server_id',$server->server_id)->get();
+            $dataArray[$key]['memory'] = DB::table('server_memories')->where('server_id',$server->server_id)->get();
         }
 
         return response()

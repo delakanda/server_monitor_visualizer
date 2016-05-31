@@ -33,9 +33,13 @@ function getServers()
 
 function constructElements(data)
 {
-    warningPercentage = 70;
-    alarmPercentage = 90;
-    soundAlarm = false;
+    diskWarningPercentage = 70;
+    diskAlarmPercentage = 90;
+    diskSoundAlarm = false;
+
+    memoryWarningPercentage = 80;
+    memoryAlarmPercentage = 95;
+    memorySoundAlarm = false;
 
     mainContainer = $('#server-wrapper');
     mainContainer.html("");
@@ -48,10 +52,12 @@ function constructElements(data)
             "<div class = 'card' id = '"+serverName+"'>"
             +"<h3><i class='fa fa-server' aria-hidden='true'></i> &nbsp;&nbsp; "+serverName+"</h3><br/>"
             +"<div class = 'disks-section'></div>"
+            +"<div class = 'memory-section'></div>"
             +"</div> &nbsp;&nbsp;&nbsp;"
         );
 
         diskInsertPoint = $('#'+serverName+" .disks-section");
+        memoryInsertPoint = $('#'+serverName+" .memory-section");
 
         for(index in data[d]['disks']) {
 
@@ -59,10 +65,10 @@ function constructElements(data)
 
             used = Math.round( ( parseFloat(disk['disk_used_space']) / parseFloat(disk['disk_total_space']) ) * 100 );
 
-            if(used >= alarmPercentage) {
+            if(used >= diskAlarmPercentage) {
                 color = 'danger';
-                soundAlarm = true;
-            } else if(used >= warningPercentage && used < alarmPercentage) {
+                diskSoundAlarm = true;
+            } else if(used >= diskWarningPercentage && used < diskAlarmPercentage) {
                 color = 'warning';
             } else {
                 color = 'success';
@@ -75,7 +81,34 @@ function constructElements(data)
                 "</div>"
             );
         }
+
+        for(index in data[d]['memory']) {
+
+            memory = data[d]['memory'][index];
+
+            used = Math.round( ( parseFloat(memory['used_memory']) / parseFloat(memory['total_memory']) ) * 100 );
+console.log(used);
+            if(used >= memoryAlarmPercentage) {
+                color = 'danger';
+                memorySoundAlarm = true;
+            } else if(used >= memoryWarningPercentage && used < memoryAlarmPercentage) {
+                color = 'warning';
+            } else {
+                color = 'success';
+            }
+
+            memoryInsertPoint.append(
+                "<h4><br/><i class='fa fa-th-large' aria-hidden='true'></i> Memory</h4>( "+memory['used_memory_disp']+" / " + memory['total_memory_disp'] +  " )" +
+                "<div class='progress'>" +
+                "<div class='progress-bar progress-bar-"+color+"' role='progressbar' aria-valuenow='"+used+"' aria-valuemin='0' aria-valuemax='100' style='width: "+used+"%'></div>"+
+                "</div>"
+            );
+        }
     }
 
-    return soundAlarm;
+    if(memorySoundAlarm || diskSoundAlarm) {
+        return true;
+    } else {
+        return false;
+    }
 }
